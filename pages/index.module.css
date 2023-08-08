@@ -49,6 +49,9 @@
   margin-bottom: 15px;
   outline-color: #10a37f;
 }
+/* .main loading {
+  width: 50;
+} */
 .main ::placeholder {
   color: #8e8ea0;
   opacity: 1;
@@ -65,7 +68,4 @@
 .main .result {
   font-weight: bold;
   margin-top: 40px;
-}
-.main .loading {
-  width: 50;
 }

@@ -11,20 +11,35 @@ export default async function (req, res) {
   const prompt = generatePrompt(foodItem, location);
   console.log(prompt);
 
-  const completion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: prompt,
-    temperature: 0.6,
-    max_tokens: 2048,
-  });
-
-  res.status(200).json({ result: completion.data.choices[0].text });
+  try {
+    const completion = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: prompt,
+      temperature: 0.6,
+      max_tokens: 2048,
+    });
+    res.status(200).json({ result: completion.data.choices[0].text });
+    
+  } catch(error) {
+    // Consider adjusting the error handling logic for your use case
+    if (error.response) {
+      console.error(error.response.status, error.response.data);
+      res.status(error.response.status).json(error.response.data);
+    } else {
+      console.error(`Error with OpenAI API request: ${error.message}`);
+      res.status(500).json({
+        error: {
+          message: 'An error occurred during your request.',
+        }
+      });
+    }
+  }
 }
 
 function generatePrompt(foodItem, location) {
     return `Only give me the number of days it would take item: ${foodItem}$ to expire when stored in location: ${location}$ 
    
-    Print results in the following format on different lines and set the recommendation to how it should be stored 
+    Print results in the following format on different lines 
     Days: 
     Recommendation: `;
 }
