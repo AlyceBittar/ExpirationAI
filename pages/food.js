@@ -40,12 +40,11 @@ export default function Home() {
     <div>
       <Head>
         <title>Expiration Date Generator</title>
-        TODO: Change this to a food related favicon
-        <link rel="icon" href="/dog.png" />
+        <link rel="icon" href="/spoiledFood.png" />
       </Head>
 
       <main className={styles.main}>
-        <h3>Expiration Date Generator 💡</h3>
+        <h3>Expiration Date Generator ⏰</h3>
         <form onSubmit={onSubmit}>
         <label>Food Item</label>
           <input
