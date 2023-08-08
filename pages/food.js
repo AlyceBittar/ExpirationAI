@@ -72,7 +72,7 @@ export default function Home() {
         </form>
         {loading && (
           <div>
-            <h3>Researhing...</h3>
+            <h3>Researching...</h3>
             <img src="/loading.gif" className={styles.loading} />
           </div>
         )}
