@@ -1,3 +1,3 @@
-import ExpirationDate from './expirationDate';
+import Food from './food';
 
-export default ExpirationDate;
+export default Food;

@@ -6,8 +6,8 @@ import styles from './index.module.css';
 export default function Home() {
   const [foodItem, setItem] = useState('');
   const [location, setLocation] = useState('Refrigerator');
+  
   const [loading, setLoading] = useState(false);
-
   const [result, setResult] = useState('');
 
   async function onSubmit(event) {
@@ -16,17 +16,23 @@ export default function Home() {
       return;
     }
     setLoading(true);
-    setResult('');
-    const response = await fetch('/api/expirationDate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ foodItem, location }),
-    });
-    const data = await response.json();
-    setResult(data.result.replaceAll('\\n', '<br />'));
-    setLoading(false);
+
+    try {
+      const response = await fetch('/api/generate-dates', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ foodItem, location }),
+          });
+        const data = await response.json();
+        setResult(data.result.replaceAll("\n", "<br />"));
+    } catch(e) {
+        alert('Failed to generate an expiration date. Try again later.');
+    } finally {
+      setLoading(false);
+    }   
+   
   }
 
   return (
@@ -38,7 +44,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h3>Expiration Date Generator 💡</h3>
+        <h3>Expiration Date Generator ⏰</h3>
         <form onSubmit={onSubmit}>
         <label>Food Item</label>
           <input
@@ -49,23 +55,22 @@ export default function Home() {
             onChange={(e) => setItem(e.target.value)}
           />
 
-          <label>What location are you planning to store the item?</label>
+          <label>Where are you planning to store the item?</label>
           <select
             name="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           >
             <option value="pantry">Pantry</option>
-            <option value="counter">Counter</option>
             <option value="refrigerator">Refrigerator</option>
             <option value="freezer">Freezer</option>
           </select>
 
-          <input type="submit" value="Generate food exiration date and storage recommendation" />
+          <input type="submit" value="Generate recommendations" />
         </form>
         {loading && (
           <div>
-            <h3>Looking for the most accurate data...</h3>
+            <h3>Researching...</h3>
             <img src="/loading.gif" className={styles.loading} />
           </div>
         )}
