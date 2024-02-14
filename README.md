@@ -22,9 +22,7 @@ Once Expration Date AI is running, you can:
 ## Project Installation and Setup
 To run the Todo App locally, follow these steps:
 1. Clone the repository to your local machine
-    ``` git clone https://github.com/your-repo/ExpirationDateAI.git ```
 2. Navigate to the project directory.
-    ```cd ExpirationDateAI```
 3. Install dependencies using npm or yarn:
     ```
     npm install
